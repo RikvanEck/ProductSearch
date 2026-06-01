@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ferrofast — AI Product Search</title>
+<style>
+  :root {
+    --bg: #0f1115; --panel: #181b22; --line: #262b36; --ink: #e8eaf0;
+    --muted: #9aa3b2; --accent: #4f8cff; --good: #2ecc71; --chip: #222734;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+  header { padding: 28px 20px 10px; max-width: 920px; margin: 0 auto; }
+  h1 { margin: 0 0 4px; font-size: 22px; }
+  .sub { color: var(--muted); font-size: 13px; }
+  main { max-width: 920px; margin: 0 auto; padding: 12px 20px 60px; }
+  .searchbar { display: flex; gap: 10px; margin: 14px 0 6px; }
+  input[type=text] { flex: 1; padding: 13px 15px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--panel); color: var(--ink); font-size: 15px; }
+  input[type=text]:focus { outline: none; border-color: var(--accent); }
+  button { padding: 0 20px; border: 0; border-radius: 10px; background: var(--accent);
+    color: #fff; font-weight: 600; cursor: pointer; font-size: 15px; }
+  button:disabled { opacity: .5; cursor: default; }
+  .opts { display: flex; align-items: center; gap: 16px; color: var(--muted); font-size: 13px; }
+  .opts label { cursor: pointer; }
+  .examples { margin: 14px 0 4px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .examples span { font-size: 12px; color: var(--muted); margin-right: 4px; align-self: center; }
+  .chip { background: var(--chip); border: 1px solid var(--line); color: var(--ink);
+    padding: 6px 10px; border-radius: 999px; font-size: 12px; cursor: pointer; }
+  .status { color: var(--muted); font-size: 13px; margin: 16px 2px; }
+  .spinner { display: inline-block; width: 14px; height: 14px; vertical-align: -2px;
+    margin-right: 8px; border: 2px solid var(--line); border-top-color: var(--accent);
+    border-radius: 50%; animation: spin .7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .searching { opacity: .6; pointer-events: none; }
+  .skeleton { height: 104px; border-radius: 12px; margin: 12px 0;
+    background: linear-gradient(90deg, var(--panel) 25%, var(--chip) 37%, var(--panel) 63%);
+    background-size: 400% 100%; animation: shimmer 1.4s ease infinite; }
+  @keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+  .best { color: var(--good); font-weight: 600; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 16px; margin: 12px 0; display: flex; gap: 14px; }
+  .card.top { border-color: var(--good); box-shadow: 0 0 0 1px var(--good) inset; }
+  .thumb { width: 76px; height: 76px; flex: none; border-radius: 8px; object-fit: contain;
+    background: #fff; }
+  .thumb.empty { background: var(--chip); }
+  .meta { flex: 1; min-width: 0; }
+  .code { font-family: ui-monospace, Menlo, Consolas, monospace; color: var(--accent); font-size: 13px; }
+  .title { font-weight: 600; margin: 2px 0 6px; }
+  .attrs { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+  .attr { background: var(--chip); border: 1px solid var(--line); border-radius: 6px;
+    padding: 2px 8px; font-size: 12px; }
+  .attr b { color: var(--muted); font-weight: 500; }
+  .reason { color: var(--muted); font-size: 13px; margin-top: 6px; font-style: italic; }
+  .packing { color: var(--ink); font-size: 13px; margin-top: 6px; }
+  .packing b { color: var(--muted); font-weight: 500; }
+  a.link { color: var(--accent); font-size: 12px; text-decoration: none; }
+  .actions { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; white-space: nowrap; }
+  .details-btn { background: var(--chip); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 8px; padding: 6px 10px; font-size: 12px; cursor: pointer; }
+  .details-btn:hover { border-color: var(--accent); }
+  /* Modal */
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none;
+    align-items: center; justify-content: center; padding: 24px; z-index: 50; }
+  .overlay.open { display: flex; }
+  .modal { background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+    max-width: 720px; width: 100%; max-height: 84vh; overflow: auto; padding: 20px 22px; }
+  .modal h2 { margin: 0 0 2px; font-size: 17px; }
+  .modal .code { margin-bottom: 14px; }
+  .modal table { width: 100%; border-collapse: collapse; }
+  .modal td { padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 13px; }
+  .modal td.k { color: var(--muted); width: 42%; }
+  .modal td.v { color: var(--ink); word-break: break-word; }
+  .modal td.v a { color: var(--accent); }
+  .modal-close { float: right; background: none; border: 0; color: var(--muted);
+    font-size: 22px; cursor: pointer; line-height: 1; padding: 0 4px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Ferrofast — AI Product Search</h1>
+  <div class="sub">Type a query (norm, material, size). Retrieval + AI rerank picks the best match.</div>
+</header>
+<main>
+  <div class="searchbar">
+    <input id="q" type="text" placeholder="e.g. ISO4762 DIN912 hex socket head cap screw M8x40 RVS-A2" autofocus />
+    <button id="go">Search</button>
+  </div>
+  <div class="opts">
+    <label><input type="checkbox" id="rerank" checked /> AI rerank</label>
+  </div>
+  <div class="examples">
+    <span>Try:</span>
+    <button class="chip">ISO4762-DIN912 hex socket head cap screw M5x30 RVS-A2</button>
+    <button class="chip">ISO4029 DIN916 hex socket set screw cup point M6x10</button>
+    <button class="chip">ball knob DIN 319 black M6x25</button>
+  </div>
+  <div id="status" class="status"></div>
+  <div id="results"></div>
+</main>
+<div id="overlay" class="overlay">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <h2 id="modalTitle">Product details</h2>
+    <div class="code" id="modalCode"></div>
+    <table><tbody id="modalBody"></tbody></table>
+  </div>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const qEl = $("#q"), goEl = $("#go"), statusEl = $("#status"), resultsEl = $("#results");
+
+document.querySelectorAll(".chip").forEach(c =>
+  c.addEventListener("click", () => { qEl.value = c.textContent; runSearch(); }));
+goEl.addEventListener("click", runSearch);
+qEl.addEventListener("keydown", e => { if (e.key === "Enter") runSearch(); });
+
+function esc(s){ return (s??"").toString().replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function deEuro(s){ return (s??"").toString().replace(/&euro;/gi, "€"); }
+function attr(label, val){ return val ? `<span class="attr"><b>${label}</b> ${esc(val)}</span>` : ""; }
+
+async function runSearch(){
+  const query = qEl.value.trim();
+  if (!query) return;
+  goEl.disabled = true;
+  statusEl.innerHTML = `<span class="spinner"></span>Searching… (AI matching can take a few seconds)`;
+  resultsEl.innerHTML = '<div class="skeleton"></div>'.repeat(3);
+  resultsEl.classList.add("searching");
+  const t0 = performance.now();
+  try {
+    const res = await fetch("/search", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ query, use_rerank: $("#rerank").checked, limit: 5 })
+    });
+    if (!res.ok) throw new Error((await res.json()).detail || res.statusText);
+    const data = await res.json();
+    render(data, ((performance.now()-t0)/1000).toFixed(1));
+  } catch(e){
+    statusEl.textContent = "Error: " + e.message;
+    resultsEl.innerHTML = "";
+  } finally { goEl.disabled = false; resultsEl.classList.remove("searching"); }
+}
+
+function render(data, secs){
+  if (!data.results.length){ statusEl.textContent = "No matches found."; return; }
+  statusEl.innerHTML = `Searched ${data.candidate_count} candidates in ${secs}s. `
+    + (data.best_reason ? `<span class="best">AI:</span> ${esc(data.best_reason)}` : "");
+  resultsEl.innerHTML = data.results.map((r, i) => {
+    const size = [r.maatvoering, r.variaties].filter(Boolean).join(" ");
+    const norm = [r.norm, r.en_norm, r.norm2].filter(Boolean).join(" / ");
+    // Prefer omschrijving — it's the full descriptor INCLUDING the size (…/M-6X20);
+    // product_titel is only the base family name without the size.
+    const title = r.omschrijving || r.product_titel || r.winkelwagen_omschrijving || r.artikelcode;
+    const packing = deEuro(r.verpakkingseenheid || "");
+    const img = r.afbeelding
+      ? `<img class="thumb" src="${esc(r.afbeelding)}" onerror="this.classList.add('empty');this.removeAttribute('src')" />`
+      : `<div class="thumb empty"></div>`;
+    return `<div class="card ${i===0?'top':''}">
+      ${img}
+      <div class="meta">
+        <div class="code">${esc(r.artikelcode)}${i===0?' · best match':''}</div>
+        <div class="title">${esc(title)}</div>
+        <div class="attrs">
+          ${attr("norm", norm)} ${attr("material", r.materiaal)}
+          ${attr("size", size)} ${attr("menu", [r.keuzemenu1, r.keuzemenu5].filter(Boolean).join(" › "))}
+        </div>
+        ${packing ? `<div class="packing"><b>packing &amp; amount:</b> ${esc(packing)}</div>` : ""}
+        ${r.match_reason ? `<div class="reason">${esc(r.match_reason)}</div>` : ""}
+        ${r.url_product ? `<a class="link" href="${esc(r.url_product)}" target="_blank">product link ↗</a>` : ""}
+      </div>
+      <div class="actions">
+        <button class="details-btn" data-code="${esc(r.artikelcode)}">ⓘ Details</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+// --- Details modal ---
+const overlay = $("#overlay");
+resultsEl.addEventListener("click", e => {
+  const btn = e.target.closest(".details-btn");
+  if (btn) openDetails(btn.dataset.code);
+});
+$("#modalClose").addEventListener("click", closeModal);
+overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+function closeModal(){ overlay.classList.remove("open"); }
+
+async function openDetails(code){
+  $("#modalCode").textContent = code;
+  $("#modalBody").innerHTML = `<tr><td class="k">Loading…</td><td class="v"></td></tr>`;
+  overlay.classList.add("open");
+  try {
+    const res = await fetch("/product/" + encodeURIComponent(code));
+    if (!res.ok) throw new Error(res.statusText);
+    const data = await res.json();
+    const f = data.fields || {};
+    $("#modalTitle").textContent = f["PRODUCT TITEL"] || f["OMSCHRIJVING"] || "Product details";
+    $("#modalBody").innerHTML = Object.keys(f).map(k => {
+      let v = deEuro(f[k]);
+      const cell = /^https?:\/\//i.test(v)
+        ? `<a href="${esc(v)}" target="_blank">${esc(v)}</a>` : esc(v);
+      return `<tr><td class="k">${esc(k)}</td><td class="v">${cell}</td></tr>`;
+    }).join("");
+  } catch(err){
+    $("#modalBody").innerHTML = `<tr><td class="k">Error</td><td class="v">${esc(err.message)}</td></tr>`;
+  }
+}
+</script>
+</body>
+</html>

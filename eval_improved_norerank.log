@@ -1,0 +1,41 @@
+C:\Users\hooio\Downloads\Tara_FeroFastDataExample\webshop-search\app\embed.py:20: UserWarning: The model sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 now uses mean pooling instead of CLS embedding. In order to preserve the previous behaviour, consider either pinning fastembed version to 0.5.1 or using `add_custom_model` functionality.
+  return TextEmbedding(model_name=config.EMBED_MODEL)
+
+== juiste_paren ==  sampled=300 usable=296 skipped(not in catalog)=4  rerank=False
+  25/296  acc@1=12.0%  acc@3=28.0%
+  50/296  acc@1=18.0%  acc@3=30.0%
+  75/296  acc@1=13.3%  acc@3=30.7%
+  100/296  acc@1=16.0%  acc@3=29.0%
+  125/296  acc@1=16.8%  acc@3=29.6%
+  150/296  acc@1=15.3%  acc@3=30.7%
+  175/296  acc@1=15.4%  acc@3=29.1%
+  200/296  acc@1=16.5%  acc@3=32.5%
+  225/296  acc@1=17.3%  acc@3=32.4%
+  250/296  acc@1=18.0%  acc@3=32.8%
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\hooio\Downloads\Tara_FeroFastDataExample\webshop-search\scripts\evaluate.py", line 112, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\hooio\Downloads\Tara_FeroFastDataExample\webshop-search\scripts\evaluate.py", line 106, in main
+    eval_juiste(args.n, use_rerank, args.seed)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hooio\Downloads\Tara_FeroFastDataExample\webshop-search\scripts\evaluate.py", line 58, in eval_juiste
+    res = search(query, use_rerank=use_rerank, limit=topk)
+  File "C:\Users\hooio\Downloads\Tara_FeroFastDataExample\webshop-search\app\search.py", line 11, in search
+    candidates = retrieve(query)
+  File "C:\Users\hooio\Downloads\Tara_FeroFastDataExample\webshop-search\app\retrieve.py", line 86, in retrieve
+    cur.execute(
+    ~~~~~~~~~~~^
+        f"SELECT {_SELECT_SQL} FROM products, "
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        (orquery, config.KEYWORD_TOPK),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\hooio\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\psycopg\cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.SyntaxError: syntax error in tsquery: "60121148 | 01 | ISO4762 | VOLDRAAD! | ST8 | 8 | M10 | 70 | ZWART | VERZINKT"
+EXIT=1

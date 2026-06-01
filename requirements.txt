@@ -1,0 +1,8 @@
+fastapi>=0.115
+uvicorn[standard]>=0.30
+psycopg[binary]>=3.2
+pgvector>=0.3.6
+openpyxl>=3.1
+fastembed>=0.4
+groq>=0.13
+python-dotenv>=1.0

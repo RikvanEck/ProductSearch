@@ -1,0 +1,80 @@
+C:\Users\hooio\Downloads\Tara_FeroFastDataExample\webshop-search\app\embed.py:20: UserWarning: The model sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 now uses mean pooling instead of CLS embedding. In order to preserve the previous behaviour, consider either pinning fastembed version to 0.5.1 or using `add_custom_model` functionality.
+  return TextEmbedding(model_name=config.EMBED_MODEL)
+foute_paren cases: 62  rerank=True
+
+  1/62  in_pool=False  pos=None  c@1=False  [maat]
+  2/62  in_pool=False  pos=None  c@1=False  [maat]
+  3/62  in_pool=True  pos=12  c@1=False  [materiaal]
+  4/62  in_pool=True  pos=39  c@1=False  [materiaal]
+  5/62  in_pool=True  pos=75  c@1=False  [materiaal]
+  6/62  in_pool=False  pos=None  c@1=False  [materiaal]
+  7/62  in_pool=False  pos=None  c@1=False  [materiaal]
+  8/62  in_pool=False  pos=None  c@1=False  [materiaal]
+  9/62  in_pool=True  pos=58  c@1=False  [materiaal]
+  10/62  in_pool=False  pos=None  c@1=False  [materiaal]
+  11/62  in_pool=False  pos=None  c@1=False  [materiaal]
+  12/62  in_pool=False  pos=None  c@1=False  [norm]
+  13/62  in_pool=False  pos=None  c@1=False  [norm]
+  14/62  in_pool=False  pos=None  c@1=False  [norm]
+  15/62  in_pool=False  pos=None  c@1=False  [norm]
+  16/62  in_pool=True  pos=8  c@1=True  [norm]
+  17/62  in_pool=False  pos=None  c@1=False  [norm]
+  18/62  in_pool=False  pos=None  c@1=False  [norm]
+  19/62  in_pool=False  pos=None  c@1=False  [norm]
+  20/62  in_pool=False  pos=None  c@1=False  [materiaal]
+  21/62  in_pool=True  pos=17  c@1=False  [norm]
+  22/62  in_pool=True  pos=14  c@1=False  [norm]
+  23/62  in_pool=True  pos=32  c@1=False  [norm]
+  24/62  in_pool=True  pos=9  c@1=False  [norm]
+  25/62  in_pool=True  pos=12  c@1=False  [norm]
+  26/62  in_pool=True  pos=24  c@1=False  [norm]
+  27/62  in_pool=True  pos=14  c@1=False  [norm]
+  28/62  in_pool=True  pos=17  c@1=False  [norm]
+  29/62  in_pool=True  pos=37  c@1=False  [norm]
+  30/62  in_pool=True  pos=9  c@1=False  [norm]
+  31/62  in_pool=True  pos=14  c@1=False  [norm]
+  32/62  in_pool=True  pos=17  c@1=False  [norm]
+  33/62  in_pool=True  pos=14  c@1=False  [norm]
+  34/62  in_pool=True  pos=2  c@1=True  [norm]
+  35/62  in_pool=True  pos=2  c@1=True  [norm]
+  36/62  in_pool=True  pos=16  c@1=False  [materiaal]
+  37/62  in_pool=False  pos=None  c@1=False  [materiaal]
+  38/62  in_pool=False  pos=None  c@1=False  [maat]
+  39/62  in_pool=False  pos=None  c@1=False  [maat]
+  40/62  in_pool=False  pos=None  c@1=False  [maat]
+  41/62  in_pool=False  pos=None  c@1=False  [materiaal+maat]
+  42/62  in_pool=False  pos=None  c@1=False  [materiaal+maat]
+  43/62  in_pool=False  pos=None  c@1=False  [materiaal+maat]
+  44/62  in_pool=False  pos=None  c@1=False  [materiaal+maat]
+  45/62  in_pool=False  pos=None  c@1=False  [materiaal+maat]
+  46/62  in_pool=False  pos=None  c@1=False  [norm]
+  47/62  in_pool=True  pos=25  c@1=False  [norm]
+  48/62  in_pool=True  pos=8  c@1=False  [norm]
+  49/62  in_pool=True  pos=22  c@1=False  [norm]
+  50/62  in_pool=True  pos=29  c@1=False  [norm]
+  51/62  in_pool=True  pos=22  c@1=False  [materiaal]
+  52/62  in_pool=True  pos=7  c@1=False  [norm]
+  53/62  in_pool=False  pos=None  c@1=False  [norm]
+  54/62  in_pool=False  pos=None  c@1=False  [norm]
+  55/62  in_pool=False  pos=None  c@1=False  [norm]
+  56/62  in_pool=False  pos=None  c@1=False  [norm]
+  57/62  in_pool=False  pos=None  c@1=False  [norm]
+  58/62  in_pool=False  pos=None  c@1=False  [norm]
+  59/62  in_pool=False  pos=None  c@1=False  [norm+materiaal]
+  60/62  in_pool=True  pos=17  c@1=False  [materiaal]
+  61/62  in_pool=True  pos=31  c@1=False  [norm]
+  62/62  in_pool=True  pos=1  c@1=False  [materiaal]
+
+=== foute_paren report ===
+category             n   in_pool  correct@1  correct@3
+------------------------------------------------------
+maat                 5       0/5        0/5        0/5
+materiaal           15      8/15       0/15       2/15
+materiaal+maat       5       0/5        0/5        0/5
+norm                36     22/36       3/36       3/36
+norm+materiaal       1       0/1        0/1        0/1
+ANY-size(maat)      10      0/10       0/10       0/10
+TOTAL               62     30/62       3/62       5/62
+
+saved baseline -> before.json
+EXIT=0

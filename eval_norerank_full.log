@@ -1,0 +1,14 @@
+C:\Users\hooio\Downloads\Tara_FeroFastDataExample\webshop-search\app\embed.py:20: UserWarning: The model sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 now uses mean pooling instead of CLS embedding. In order to preserve the previous behaviour, consider either pinning fastembed version to 0.5.1 or using `add_custom_model` functionality.
+  return TextEmbedding(model_name=config.EMBED_MODEL)
+
+== juiste_paren ==  sampled=300 usable=296 skipped(not in catalog)=4  rerank=False
+  25/296  acc@1=12.0%  acc@3=28.0%
+  50/296  acc@1=16.0%  acc@3=32.0%
+  75/296  acc@1=13.3%  acc@3=33.3%
+  100/296  acc@1=15.0%  acc@3=32.0%
+  125/296  acc@1=13.6%  acc@3=31.2%
+  150/296  acc@1=12.0%  acc@3=32.0%
+  175/296  acc@1=12.6%  acc@3=31.4%
+  200/296  acc@1=13.5%  acc@3=33.5%
+  225/296  acc@1=14.2%  acc@3=33.8%
+  250/296  acc@1=14.0%  acc@3=33.6%

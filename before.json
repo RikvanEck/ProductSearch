@@ -1,0 +1,44 @@
+{
+  "maat": {
+    "n": 5,
+    "in_pool": 0,
+    "c1": 0,
+    "c3": 0
+  },
+  "TOTAL": {
+    "n": 62,
+    "in_pool": 30,
+    "c1": 3,
+    "c3": 5
+  },
+  "materiaal": {
+    "n": 15,
+    "in_pool": 8,
+    "c1": 0,
+    "c3": 2
+  },
+  "norm": {
+    "n": 36,
+    "in_pool": 22,
+    "c1": 3,
+    "c3": 3
+  },
+  "materiaal+maat": {
+    "n": 5,
+    "in_pool": 0,
+    "c1": 0,
+    "c3": 0
+  },
+  "norm+materiaal": {
+    "n": 1,
+    "in_pool": 0,
+    "c1": 0,
+    "c3": 0
+  },
+  "ANY-size(maat)": {
+    "n": 10,
+    "in_pool": 0,
+    "c1": 0,
+    "c3": 0
+  }
+}

@@ -1,0 +1,17 @@
+INFO:     Started server process [26364]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+C:\Users\hooio\Downloads\Tara_FeroFastDataExample\webshop-search\app\embed.py:20: UserWarning: The model sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 now uses mean pooling instead of CLS embedding. In order to preserve the previous behaviour, consider either pinning fastembed version to 0.5.1 or using `add_custom_model` functionality.
+  return TextEmbedding(model_name=config.EMBED_MODEL)
+INFO:     127.0.0.1:57875 - "POST /search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59776 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54479 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63260 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49779 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49779 - "POST /search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54203 - "POST /search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62299 - "POST /search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53019 - "GET /product/933003200060020K HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64015 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64015 - "GET /favicon.ico HTTP/1.1" 404 Not Found
